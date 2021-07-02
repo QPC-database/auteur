@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A source processing node."><meta name="keywords" content="rust, rustlang, rust-lang, source"><title>auteur::source - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../auteur/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><p class="location">Module source</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class="location"><a href="../index.html">auteur</a></p><div id="sidebar-vars" data-name="source" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">auteur</a>::<wbr><a class="mod" href="">source</a><button id="copy-path" onclick="copy_path(this)">⎘</button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/auteur/source.rs.html#1-729" title="goto source code">[src]</a></span></h1><div class="docblock"><p>A source processing node.</p>
+<p>The only supported source type is created with a URI. In the future
+generators could also be supported, for example to display a countdown.</p>
+<p>The main complexity for this node is the <a href="../../auteur_controlling/controller/enum.State.html#variant.Starting"><code>starting</code></a>
+feature: when the node is scheduled to play in the future, we spin it
+up 10 seconds before its cue time. Non-live sources are blocked
+by fallbacksrc, which only picks a base time once unblocked,
+and data coming from live sources is discarded by the StreamProducers
+until forward() is called on them.</p>
+<p>Part of the extra complexity is due to the rescheduling feature:
+when rescheduling a prerolling source, we want to tear down the
+previous pipeline, but as logical connections are tracked by the
+StreamProducer elements, we want to keep their lifecycle tied to
+that of the source. This means appsinks may be removed from an old
+pipeline and moved to a new one, this is safe but needs to be kept
+in mind.</p>
+</div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.Media.html" title="auteur::source::Media struct">Media</a></td><td class="docblock-short"><p>The pipeline and various GStreamer elements that the source
+optionally wraps, their lifetime is not directly bound to that
+of the source itself</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.NewSourceBinMessage.html" title="auteur::source::NewSourceBinMessage struct">NewSourceBinMessage</a></td><td class="docblock-short"><p>Sent by the <a href="struct.Source.html" title="Source"><code>Source</code></a> to notify itself that the <code>urisourcebin</code>
+was added in <code>fallbacksrc</code></p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.NewSwitchMessage.html" title="auteur::source::NewSwitchMessage struct">NewSwitchMessage</a></td><td class="docblock-short"><p>Sent by the <a href="struct.Source.html" title="Source"><code>Source</code></a> to notify itself that a new <code>fallbackswitch</code>
+was added in <code>fallbacksrc</code></p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Source.html" title="auteur::source::Source struct">Source</a></td><td class="docblock-short"><p>The Source actor</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.SourceStatusMessage.html" title="auteur::source::SourceStatusMessage struct">SourceStatusMessage</a></td><td class="docblock-short"><p>Sent by the <a href="struct.Source.html" title="Source"><code>Source</code></a> to notify itself that the status of one
+of the monitored elements changed</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.StreamMessage.html" title="auteur::source::StreamMessage struct">StreamMessage</a></td><td class="docblock-short"><p>Sent by the <a href="struct.Source.html" title="Source"><code>Source</code></a> to notify itself that a stream started or ended</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="auteur" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script></body></html>
